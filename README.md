@@ -29,17 +29,17 @@ apt-get install nginx
 ## Usage
 
 ```Shell
-ex1-init-countries.py --url URL --table TABLE 
-ex1-modis-fires-collect.py --url URL --table TABLE
+ex1-init-countries.sh 
+ex1-modis-fires-collect.sh
 ex1-modis-fires-export.py --output OUTPUT 
 ```
 
 ## Examples
 
 ```Shell
-ex1-init-countries.py --url 'https://firms.modaps.eosdis.nasa.gov/active_fire/shapes/zips/Global_24h.zip' --table 'country'
-ex1-modis-fires-collect.py --url 'https://firms.modaps.eosdis.nasa.gov/active_fire/shapes/zips/Global_24h.zip' --table 'hotspot'
-ex1-modis-fires-export.py --output '/var/www/shapefiles'
+ex1-init-countries.sh
+ex1-modis-fires-collect.sh
+ex1-modis-fires-export.py --output '/var/www/hotspots'
 ```
 
 ## Contributing
