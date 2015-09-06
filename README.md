@@ -50,7 +50,13 @@ ex1-modis-fires-collect.sh TEMP
 ex1-modis-fires-export.py --output OUTPUT 
 ```
 
-You'll need to run `ex1-init-countries.sh` once to download and import the country information.  Then set up a cron job to run `ex1-modis-fires-collect.sh` and `ex1-modis-fires-export` each day.  An example cron file is at [
+You'll need to run `ex1-init-countries.sh` once to download and import the country information.  Then set up a cron job to run `ex1-modis-fires-collect.sh` and `ex1-modis-fires-export` each day.  Example cron jobs are in the examples folder.
+
+For the crontab, try
+
+```
+00 00 * * * ubuntu_daily_update.sh
+```
 
 ## Examples
 
