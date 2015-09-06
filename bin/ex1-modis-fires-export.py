@@ -28,12 +28,18 @@ def export_hotspots(args):
     rs = cur.fetchall()
     countries = [iso3 for (iso3, ) in rs]
 
-    columns = ["H.ogc_fid", "H.wkb_geometry", "H.latitude", "H.longitude", "brightness", "scan", "track", "acq_date", "acq_time", "satellite", "confidence", "version", "bright_t31", "frp", "fips", "iso2", "iso3", "un", "name", "area", "pop2005", "region", "subregion", "lon", "lat"]
+    columns = [
+        "H.ogc_fid", "H.wkb_geometry",
+        "H.latitude", "H.longitude",
+        "brightness", "scan", "track", "acq_date", "acq_time", "satellite",
+        "confidence", "version", "bright_t31", "frp",
+        "fips", "iso2", "iso3", "un",
+        "name", "area", "pop2005",
+        "region", "subregion", "lon", "lat"]
 
     stmts = [
         "DROP TABLE IF EXISTS hotspots_by_country;",
         "CREATE TABLE hotspots_by_country AS SELECT "+(", ".join(columns))+" FROM hotspot as H INNER JOIN country as C ON st_intersects(H.wkb_geometry, C.wkb_geometry) ;"]
-
 
     for stmt in stmts:
         cur.execute(stmt)
