@@ -1,7 +1,7 @@
 #!/bin/bash
 TEMP=$1
 if [ ! -d "$TEMP" ]; then
-    mkdir $TEMP
+    mkdir -p $TEMP
 fi
 cd $TEMP
 ZIPFILE="Global_24h.zip"

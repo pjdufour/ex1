@@ -1,7 +1,7 @@
 #!/bin/bash
-TEMP='/home/vagrant/temp'
+TEMP=$1
 if [ ! -d "$TEMP" ]; then
-    mkdir $TEMP
+    mkdir -p $TEMP
 fi
 cd $TEMP
 ZIPFILE="TM_WORLD_BORDERS-0.3.zip"

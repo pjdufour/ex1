@@ -31,26 +31,32 @@ We'll now begin project-specific initialization.  Run `ex1-init.sh` to:
 Lastly, we'll need to adjust the authentication permission for PostGIS, so that OGR can authenticate using md5.  Change the pg_hba.conf file to look like the following (`vim /etc/postgresql/9.3/main/pg_hba.conf`)
 
 ```
-local   all             postgres                                peer
+local all postgres peer
 local ex1 ex1 md5
 host ex1 ex1 127.0.0.1/32 md5
 ```
 
-Restart PostGIS (`/etc/init.d/postgresql restart`) and everything should be ready.
+Restart PostGIS (`/etc/init.d/postgresql restart`) and everything should be ready.  From your regular user (`ubuntu` or `vagrant`), double check the database connecton with:
+
+```
+PGPASSWORD=ex1 psql -d ex1 -U ex1
+```
 
 ## Usage
 
 ```Shell
-ex1-init-countries.sh 
+ex1-init-countries.sh TEMP 
 ex1-modis-fires-collect.sh TEMP
 ex1-modis-fires-export.py --output OUTPUT 
 ```
 
+You'll need to run `ex1-init-countries.sh` once to download and import the country information.  Then set up a cron job to run `ex1-modis-fires-collect.sh` and `ex1-modis-fires-export` each day.  An example cron file is at [
+
 ## Examples
 
 ```Shell
-ex1-init-countries.sh
-ex1-modis-fires-collect.sh
+ex1-init-countries.sh /home/vagrant/temp/countries
+ex1-modis-fires-collect.sh /home/vagrant/temp/modis_fires
 ex1-modis-fires-export.py --output '/var/www/hotspots'
 ```
 
