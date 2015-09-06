@@ -3,7 +3,6 @@ import argparse
 import os
 import psycopg2
 import osgeo.ogr as ogr
-import osgeo.osr as osr
 
 
 def export_hotspots(args):
@@ -59,7 +58,7 @@ def export_hotspots_to_disk(args, countries):
     out_parent = args.output
 
     if not os.path.isdir(out_parent):
-        os.mkdirs(out_parent)
+        os.makedirs(out_parent)
 
     conn_params = {
         'host': args.db_host,
