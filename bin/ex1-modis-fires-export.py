@@ -1,48 +1,9 @@
 #!/usr/bin/python
-from base64 import b64encode
-from optparse import make_option
-import json
 import argparse
-import time
 import os
-import sys
-import subprocess
-import zipfile
 import psycopg2
 import osgeo.ogr as ogr
 import osgeo.osr as osr
-#==#
-def make_request(url, params, auth=None, data=None, contentType=None, GEVENT_MONKEY_PATCH=False):
-    """
-    Prepares a request from a url, params, and optionally authentication.
-    """
-
-    if GEVENT_MONKEY_PATCH:
-        # Import Gevent and monkey patch
-        try:
-            from gevent import monkey
-            monkey.patch_all()
-        except:
-            print "gevent monkey patch failed"
-
-    import urllib
-    import urllib2
-    
-    if params:
-        url = url + '?' + urllib.urlencode(params)
-
-    req = urllib2.Request(url, data=data)
-
-    if auth:
-        req.add_header('AUTHORIZATION', 'Basic ' + auth)
-
-    if contentType:
-        req.add_header('Content-type', contentType)
-    else:
-        if data:
-            req.add_header('Content-type', 'text/xml')
-
-    return urllib2.urlopen(req)
 
 
 def export_hotspots(args):
@@ -75,7 +36,6 @@ def export_hotspots(args):
 
 
     for stmt in stmts:
-        print stmt
         cur.execute(stmt)
 
     conn.commit()
@@ -85,9 +45,13 @@ def export_hotspots(args):
 
     export_hotspots_to_disk(args, countries)
 
+
 def export_hotspots_to_disk(args, countries):
 
     out_parent = args.output
+
+    if not os.path.isdir(out_parent):
+        os.mkdirs(out_parent)
 
     conn_params = {
         'host': args.db_host,
@@ -96,8 +60,8 @@ def export_hotspots_to_disk(args, countries):
         'user': args.db_user,
         'password': args.db_pass}
 
-    conn_str = "PG:host={host} port={port} dbname={database} user={user} password={password}".format(**conn_params)
-    print conn_str
+    conn_str = "PG:host={host} port={port} dbname={database}"
+               " user={user} password={password}".format(**conn_params)
     conn = ogr.Open(conn_str)
     in_lyr = conn.GetLayer("hotspots_by_country")
     in_lyr_def = in_lyr.GetLayerDefn()
