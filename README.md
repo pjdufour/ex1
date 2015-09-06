@@ -42,7 +42,7 @@ Restart PostGIS (`/etc/init.d/postgresql restart`) and everything should be read
 
 ```Shell
 ex1-init-countries.sh 
-ex1-modis-fires-collect.sh
+ex1-modis-fires-collect.sh TEMP
 ex1-modis-fires-export.py --output OUTPUT 
 ```
 

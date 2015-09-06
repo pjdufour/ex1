@@ -50,6 +50,10 @@ def export_hotspots(args):
     verbose = args.verbose
     output = args.output
 
+    if not output:
+        print "You need to set the output first"
+        return 0
+
     conn_params = {
         'host': args.db_host,
         'port': args.db_port,
@@ -126,7 +130,7 @@ def export_hotspots_to_disk(args, countries):
 #==#
 parser = argparse.ArgumentParser(description='Clip & export 24-hr hotspots by country.')
 parser.add_argument('--verbose', '-v', default=0, action='count', help="Print out debug messages.")
-parser.add_argument("--output", default="/var/www/hotspots", help="The output directory to export the country hotspots shapefile.")
+parser.add_argument("--output", help="The output directory to export the country hotspots shapefile.")
 parser.add_argument("--db_host", default="localhost", help="The database host")
 parser.add_argument("--db_port", default="5432", help="The database port")
 parser.add_argument("--db_name", default="ex1", help="The database name")

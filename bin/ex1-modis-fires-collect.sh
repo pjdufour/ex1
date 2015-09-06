@@ -1,5 +1,5 @@
 #!/bin/bash
-TEMP='/home/vagrant/temp'
+TEMP=$1
 if [ ! -d "$TEMP" ]; then
     mkdir $TEMP
 fi
