@@ -28,6 +28,16 @@ We'll now begin project-specific initialization.  Run `ex1-init.sh` to:
 - install system libraries,
 - install and configure PostGiS;
 
+Lastly, we'll need to adjust the authentication permission for PostGIS, so that OGR can authenticate using md5.  Change the pg_hba.conf file to look like the following (`vim /etc/postgresql/9.3/main/pg_hba.conf`)
+
+```
+local   all             postgres                                peer
+local ex1 ex1 md5
+host ex1 ex1 127.0.0.1/32 md5
+```
+
+Restart PostGIS (`/etc/init.d/postgresql restart`) and everything should be ready.
+
 ## Usage
 
 ```Shell
