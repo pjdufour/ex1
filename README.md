@@ -12,19 +12,21 @@ These installation instructions are subject to change.  Right now, since there a
 As root (`sudo su -`), for basic install execute the following:
 
 ```
-apt-get update
+apt-get update; apt-get upgrade;
 apt-get install -y curl vim git
 #==#
 cd /opt
 git clone https://github.com/pjdufour/ex1.git ex1.git
 cp ex1.git/profile/ex1.sh /etc/profile.d/
+#==#
+source /etc/profile.d/ex1.sh
 ```
 
-You'll also want to install [NGINX](http://nginx.org/) to provide a server to publish the exported files:
+We'll now begin project-specific initialization.  Run `ex1-init.sh` to:
 
-```
-apt-get install nginx
-```
+- install Python dependencies,
+- install system libraries,
+- install and configure PostGiS;
 
 ## Usage
 
