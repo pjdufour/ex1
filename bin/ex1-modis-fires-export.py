@@ -70,10 +70,6 @@ def export_hotspots(args):
     columns = ["H.ogc_fid", "H.wkb_geometry", "H.latitude", "H.longitude", "brightness", "scan", "track", "acq_date", "acq_time", "satellite", "confidence", "version", "bright_t31", "frp", "fips", "iso2", "iso3", "un", "name", "area", "pop2005", "region", "subregion", "lon", "lat"]
 
     stmts = [
-        "DROP MATERIALIZED VIEW IF EXISTS hotspots_by_country;",
-        "CREATE MATERIALIZED VIEW hotspots_by_country AS SELECT "+(", ".join(columns))+" FROM hotspot as H INNER JOIN country as C ON st_intersects(H.wkb_geometry, C.wkb_geometry) ;"]
-
-    stmts = [
         "DROP TABLE IF EXISTS hotspots_by_country;",
         "CREATE TABLE hotspots_by_country AS SELECT "+(", ".join(columns))+" FROM hotspot as H INNER JOIN country as C ON st_intersects(H.wkb_geometry, C.wkb_geometry) ;"]
 
@@ -81,6 +77,8 @@ def export_hotspots(args):
     for stmt in stmts:
         print stmt
         cur.execute(stmt)
+
+    conn.commit()
 
     cur.close()
     conn.close()
