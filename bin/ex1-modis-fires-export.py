@@ -67,10 +67,9 @@ def export_hotspots_to_disk(args, countries):
         'user': args.db_user,
         'password': args.db_pass}
 
-    conn_str = "PG:host={host} port={port} dbname={database}"
-    " user={user} password={password}".format(**conn_params)
+    conn_str = "PG:host={host} port={port} dbname={database} user={user} password={password}" # flake8: noqa
 
-    conn = ogr.Open(conn_str)
+    conn = ogr.Open(conn_str.format(**conn_params))
     in_lyr = conn.GetLayer("hotspots_by_country")
     in_lyr_def = in_lyr.GetLayerDefn()
 
