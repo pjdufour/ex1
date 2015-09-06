@@ -39,7 +39,9 @@ def export_hotspots(args):
 
     stmts = [
         "DROP TABLE IF EXISTS hotspots_by_country;",
-        "CREATE TABLE hotspots_by_country AS SELECT "+(", ".join(columns))+" FROM hotspot as H INNER JOIN country as C ON st_intersects(H.wkb_geometry, C.wkb_geometry) ;"]
+        "CREATE TABLE hotspots_by_country AS SELECT"
+        " "+(", ".join(columns))+" FROM hotspot as H INNER JOIN country as C ON"
+        " st_intersects(H.wkb_geometry, C.wkb_geometry) ;"]
 
     for stmt in stmts:
         cur.execute(stmt)
@@ -67,13 +69,13 @@ def export_hotspots_to_disk(args, countries):
         'password': args.db_pass}
 
     conn_str = "PG:host={host} port={port} dbname={database}"
-               " user={user} password={password}".format(**conn_params)
+        " user={user} password={password}".format(**conn_params)
     conn = ogr.Open(conn_str)
     in_lyr = conn.GetLayer("hotspots_by_country")
     in_lyr_def = in_lyr.GetLayerDefn()
 
     out_drv = ogr.GetDriverByName("ESRI Shapefile")
-    for iso3 in countries: 
+    for iso3 in countries:
         print "Exporting hotspots for country "+iso3
         in_lyr.SetAttributeFilter("iso3 = '{iso3}'".format(iso3=iso3))
         out_shp = os.path.join(out_parent, "{iso3}.shp".format(iso3=iso3))
